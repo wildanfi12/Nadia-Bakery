@@ -33,3 +33,28 @@ document.querySelectorAll('[data-filter]').forEach(button => {
   });
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+const galleryItems = [
+  {
+    src: './assets/brownies-nadia.jpg',
+    alt: 'Aneka brownies Nadia Bakery yang sudah dipotong dan dikemas',
+    caption: '01 / BROWNIES DARI DAPUR NADIA'
+  },
+  {
+    src: './assets/brownies-pandan.jpg',
+    alt: 'Foto peluncuran brownies Nadia Bakery dari Instagram resmi',
+    caption: '02 / SEPOTONG MANIS DARI NADIA'
+  }
+];
+let galleryIndex = 0;
+function changePhoto(direction) {
+  galleryIndex = (galleryIndex + direction + galleryItems.length) % galleryItems.length;
+  const item = galleryItems[galleryIndex];
+  const image = document.querySelector('#gallery-image');
+  image.src = item.src;
+  image.alt = item.alt;
+  document.querySelector('#gallery-caption').textContent = item.caption;
+  document.querySelector('#gallery-status').textContent = `Foto ${galleryIndex + 1} dari ${galleryItems.length}: ${item.alt}`;
+}
+document.querySelector('#gallery-prev').addEventListener('click', () => changePhoto(-1));
+document.querySelector('#gallery-next').addEventListener('click', () => changePhoto(1));

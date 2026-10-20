@@ -6,11 +6,16 @@ Website berbahasa Indonesia untuk Nadia Bakery, Parakansalak, Sukabumi. HTML, CS
 
 Node.js 20+: jalankan `npm start`, lalu buka http://127.0.0.1:4173. Pemeriksaan sintaks: `npm run check`.
 
+## Desain
+
+Mengadaptasi referensi Monte yang diberikan pemilik: hero terakota `#b84b30`, kanvas krem `#f8f4e9`, wordmark tengah, judul melengkung SVG, ilustrasi garis roti, dan tombol outline pil. DM Serif Display serta IBM Plex Mono menjadi substitusi font yang disebutkan dalam referensi. Konten, fotografi, dan kontak tetap milik Nadia Bakery; informasi café contoh tidak dipakai.
+
 ## Fitur
 
 - Desain responsif, navigasi seluler, filter kategori, FAQ, reduced-motion dan navigasi keyboard.
 - Tautan WhatsApp dengan pesan sesuai kategori; tidak mengirim pesan otomatis.
 - Foto disimpan lokal sehingga tidak bergantung pada URL Instagram yang kedaluwarsa.
+- Galeri dua foto dengan kontrol sebelumnya/berikutnya dan pengumuman untuk pembaca layar.
 
 ## Sumber konten
 
