@@ -1,0 +1,1 @@
+{"name":"nadia-bakery","version":"1.0.0","private":true,"scripts":{"start":"node server.mjs","check":"node --check script.js"}}
