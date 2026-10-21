@@ -34,30 +34,50 @@ document.querySelectorAll('[data-filter]').forEach(button => {
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-const galleryItems = [
-  {
-    src: './assets/brownies-nadia.jpg',
-    alt: 'Aneka brownies Nadia Bakery yang sudah dipotong dan dikemas',
-    caption: '01 / BROWNIES DARI DAPUR NADIA'
-  },
-  {
-    src: './assets/brownies-pandan.jpg',
-    alt: 'Foto peluncuran brownies Nadia Bakery dari Instagram resmi',
-    caption: '02 / SEPOTONG MANIS DARI NADIA'
-  }
-];
+const galleryTrack = document.querySelector('#instagram-gallery');
+const gallerySlides = [...galleryTrack.querySelectorAll('.instagram-slide')];
+const galleryCaption = document.querySelector('#gallery-caption');
+const galleryStatus = document.querySelector('#gallery-status');
 let galleryIndex = 0;
-function changePhoto(direction) {
-  galleryIndex = (galleryIndex + direction + galleryItems.length) % galleryItems.length;
-  const item = galleryItems[galleryIndex];
-  const image = document.querySelector('#gallery-image');
-  image.src = item.src;
-  image.alt = item.alt;
-  document.querySelector('#gallery-caption').textContent = item.caption;
-  document.querySelector('#gallery-status').textContent = `Foto ${galleryIndex + 1} dari ${galleryItems.length}: ${item.alt}`;
+let galleryScrollFrame;
+
+function updateGallery(index, announce = false) {
+  galleryIndex = index;
+  gallerySlides.forEach((slide, slideIndex) => slide.setAttribute('aria-current', String(slideIndex === index)));
+  galleryCaption.textContent = gallerySlides[index].dataset.caption;
+  if (announce) galleryStatus.textContent = `Poster ${index + 1} dari ${gallerySlides.length}: ${gallerySlides[index].querySelector('img').alt}`;
 }
-document.querySelector('#gallery-prev').addEventListener('click', () => changePhoto(-1));
-document.querySelector('#gallery-next').addEventListener('click', () => changePhoto(1));
+
+function goToGallerySlide(index) {
+  const nextIndex = (index + gallerySlides.length) % gallerySlides.length;
+  const slide = gallerySlides[nextIndex];
+  const left = slide.offsetLeft - (galleryTrack.clientWidth - slide.clientWidth) / 2;
+  galleryTrack.scrollTo({ left, behavior: 'smooth' });
+  updateGallery(nextIndex, true);
+}
+
+galleryTrack.addEventListener('scroll', () => {
+  cancelAnimationFrame(galleryScrollFrame);
+  galleryScrollFrame = requestAnimationFrame(() => {
+    const trackCenter = galleryTrack.scrollLeft + galleryTrack.clientWidth / 2;
+    const closestIndex = gallerySlides.reduce((closest, slide, index) => {
+      const center = slide.offsetLeft + slide.clientWidth / 2;
+      const closestCenter = gallerySlides[closest].offsetLeft + gallerySlides[closest].clientWidth / 2;
+      return Math.abs(center - trackCenter) < Math.abs(closestCenter - trackCenter) ? index : closest;
+    }, 0);
+    if (closestIndex !== galleryIndex) updateGallery(closestIndex);
+  });
+}, { passive: true });
+
+galleryTrack.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    event.preventDefault();
+    goToGallerySlide(galleryIndex + (event.key === 'ArrowRight' ? 1 : -1));
+  }
+});
+document.querySelector('#gallery-prev').addEventListener('click', () => goToGallerySlide(galleryIndex - 1));
+document.querySelector('#gallery-next').addEventListener('click', () => goToGallerySlide(galleryIndex + 1));
+updateGallery(0);
 
 const faqTriggers = [...document.querySelectorAll('.faq-trigger')];
 faqTriggers.forEach(trigger => {

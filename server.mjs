@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = path.dirname(fileURLToPath(import.meta.url));
 const types = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.jpg':'image/jpeg','.png':'image/png'};
-const allowed = new Set(['index.html','styles.css','script.js','motion.css','motion.js','product-art.css','product-art.js','assets/render-roti.png','assets/render-brownies.png','assets/render-kering.png','assets/render-pia.png','assets/logo.jpg','assets/brownies-nadia.jpg','assets/brownies-pandan.jpg']);
+const allowed = new Set(['index.html','styles.css','script.js','motion.css','motion.js','product-art.css','product-art.js','assets/render-roti.png','assets/render-brownies.png','assets/render-kering.png','assets/render-pia.png','assets/logo.jpg','assets/poster-brownies-1.png','assets/poster-brownies-2.png','assets/poster-brownies-3.png']);
 const server = http.createServer(async (req,res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url,'http://localhost').pathname);
