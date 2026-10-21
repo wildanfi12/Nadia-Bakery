@@ -1,14 +1,14 @@
 /* Realistic rendered product imagery with layered, accessible motion. */
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const names = {roti:'Roti',brownies:'Brownies',kering:'Roti kering',pia:'Pia'};
+  const names = {roti:'Roti Original',brownies:'Brownies',kering:'Roti Kering',pia:'Pia'};
   const descriptions = {
-    roti:'Render roti bulat dengan permukaan keemasan mengilap berdasarkan foto referensi',
+    roti:'Render Roti Original berbentuk bulat dengan permukaan keemasan mengilap berdasarkan foto referensi',
     brownies:'Render brownies pandan, mocca, dan coklat bertabur wijen berdasarkan foto Nadia',
     kering:'Ilustrasi irisan roti kering panggang dengan tekstur renyah',
     pia:'Ilustrasi pia dengan kulit berlapis dan bagian dalam yang terlihat'
   };
-  const responses = {roti:'Roti bulat dengan permukaan keemasan yang mengilap.',brownies:'Pandan, mocca, dan coklat. Tiga warna, tiga rasa.',kering:'Irisan renyah dengan tekstur panggang yang terlihat jelas.',pia:'Kulit berlapis tipis dengan isi di bagian tengah.'};
+  const responses = {roti:'Roti Original dengan permukaan keemasan yang mengilap.',brownies:'Pandan, mocca, dan coklat. Tiga warna, tiga rasa.',kering:'Irisan renyah dengan tekstur panggang yang terlihat jelas.',pia:'Kulit berlapis tipis dengan isi di bagian tengah.'};
   function mount(host,type,hero=false){
     host.classList.add('render-scene');host.dataset.render=type;
     if(host.tagName==='BUTTON')host.setAttribute('aria-label',`Lihat detail ${names[type]}`);
@@ -26,6 +26,8 @@
     return activate;
   }
   document.querySelectorAll('.motion-art').forEach(host=>mount(host,host.dataset.art));
+  const originalMotionTitle=document.querySelector('.motion-art[data-art="roti"]')?.closest('.motion-product')?.querySelector('h3');if(originalMotionTitle)originalMotionTitle.textContent='Roti Original';
+  const originalFilter=document.querySelector('[data-filter="roti"]');if(originalFilter)originalFilter.textContent='Roti Original';
   document.querySelectorAll('.product-art').forEach((old,i)=>{
     const type=['roti','kering','brownies'][i];if(!type)return;
     const button=document.createElement('button');button.className='product-art product-art-3d';button.type='button';button.setAttribute('aria-label',`Lihat detail ${names[type]}`);old.replaceWith(button);mount(button,type);

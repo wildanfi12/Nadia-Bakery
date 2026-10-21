@@ -58,3 +58,18 @@ function changePhoto(direction) {
 }
 document.querySelector('#gallery-prev').addEventListener('click', () => changePhoto(-1));
 document.querySelector('#gallery-next').addEventListener('click', () => changePhoto(1));
+
+const faqTriggers = [...document.querySelectorAll('.faq-trigger')];
+faqTriggers.forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const willOpen = trigger.getAttribute('aria-expanded') !== 'true';
+    faqTriggers.forEach(item => item.setAttribute('aria-expanded', 'false'));
+    trigger.setAttribute('aria-expanded', String(willOpen));
+  });
+  trigger.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
+    }
+  });
+});
