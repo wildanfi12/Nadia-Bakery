@@ -50,11 +50,11 @@ h2 { font-size: clamp(28px, 3.2vw, 40px); line-height: 1.18; letter-spacing: .08
 .gallery-heading { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin: 0 0 34px; }
 .gallery-heading h2 { margin: 8px 0 0; }
 .gallery-heading > p { max-width: 390px; margin: 0 0 5px; font: 18px/1.55 Georgia, serif; }
-.instagram-track { display: grid; grid-auto-flow: column; grid-auto-columns: min(520px, 72vw); gap: 24px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--corten) transparent; padding: 0 calc((100% - min(520px, 72vw)) / 2) 18px; touch-action: pan-x pan-y; }
+.instagram-track { display: grid; grid-auto-flow: column; grid-auto-columns: min(520px, 72vw); gap: 24px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 0; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--corten) transparent; padding: 0 0 18px; touch-action: pan-x pan-y; }
 .instagram-track::-webkit-scrollbar { height: 4px; }
 .instagram-track::-webkit-scrollbar-thumb { background: var(--corten); border-radius: 999px; }
-.instagram-slide { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; scroll-snap-align: center; scroll-snap-stop: always; background: #fff; }
-.instagram-slide img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.instagram-slide { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always; background: #fff; }
+.instagram-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .instagram-slide[aria-current="true"] { box-shadow: 0 16px 45px rgba(76, 38, 24, .12); }
 .instagram-track:focus-visible { outline: 1px solid var(--corten); outline-offset: 7px; }
 .gallery-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; gap: 20px; }
@@ -137,7 +137,7 @@ footer { max-width: 1200px; margin: auto; padding: 60px 32px 25px; }
   .gallery { padding-top: 44px; }
   .gallery-heading { display: block; margin-bottom: 24px; }
   .gallery-heading > p { margin-top: 14px; font-size: 16px; }
-  .instagram-track { grid-auto-columns: 82vw; gap: 14px; padding-inline: calc((100% - 82vw) / 2); }
+  .instagram-track { grid-auto-columns: 82vw; gap: 14px; padding-inline: 0; }
   .gallery-bottom > span { font-size: 8px; max-width: 200px; }
   .products { grid-template-columns: 1fr; gap: 44px; }
   .product-art { max-height: 450px; }

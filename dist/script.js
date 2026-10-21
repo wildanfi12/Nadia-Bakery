@@ -40,6 +40,8 @@ const galleryCaption = document.querySelector('#gallery-caption');
 const galleryStatus = document.querySelector('#gallery-status');
 let galleryIndex = 0;
 let galleryScrollFrame;
+let galleryScrollTimer;
+let galleryScrollLocked = false;
 
 function updateGallery(index, announce = false) {
   galleryIndex = index;
@@ -51,20 +53,22 @@ function updateGallery(index, announce = false) {
 function goToGallerySlide(index) {
   const nextIndex = (index + gallerySlides.length) % gallerySlides.length;
   const slide = gallerySlides[nextIndex];
-  const left = slide.offsetLeft - (galleryTrack.clientWidth - slide.clientWidth) / 2;
+  const left = slide.offsetLeft - gallerySlides[0].offsetLeft;
+  galleryScrollLocked = true;
+  clearTimeout(galleryScrollTimer);
   galleryTrack.scrollTo({ left, behavior: 'smooth' });
   updateGallery(nextIndex, true);
+  galleryScrollTimer = setTimeout(() => { galleryScrollLocked = false; }, 650);
 }
 
 galleryTrack.addEventListener('scroll', () => {
   cancelAnimationFrame(galleryScrollFrame);
   galleryScrollFrame = requestAnimationFrame(() => {
-    const trackCenter = galleryTrack.scrollLeft + galleryTrack.clientWidth / 2;
-    const closestIndex = gallerySlides.reduce((closest, slide, index) => {
-      const center = slide.offsetLeft + slide.clientWidth / 2;
-      const closestCenter = gallerySlides[closest].offsetLeft + gallerySlides[closest].clientWidth / 2;
-      return Math.abs(center - trackCenter) < Math.abs(closestCenter - trackCenter) ? index : closest;
-    }, 0);
+    if (galleryScrollLocked) return;
+    const maxScroll = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+    const closestIndex = maxScroll > 0
+      ? Math.round((galleryTrack.scrollLeft / maxScroll) * (gallerySlides.length - 1))
+      : 0;
     if (closestIndex !== galleryIndex) updateGallery(closestIndex);
   });
 }, { passive: true });
