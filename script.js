@@ -38,14 +38,14 @@ const galleryTrack = document.querySelector('#instagram-gallery');
 const gallerySlides = [...galleryTrack.querySelectorAll('.instagram-slide')];
 const galleryCaption = document.querySelector('#gallery-caption');
 const galleryStatus = document.querySelector('#gallery-status');
+const galleryProgress = [...document.querySelectorAll('.gallery-progress span')];
 let galleryIndex = 0;
 let galleryScrollFrame;
-let galleryScrollTimer;
-let galleryScrollLocked = false;
 
 function updateGallery(index, announce = false) {
   galleryIndex = index;
   gallerySlides.forEach((slide, slideIndex) => slide.setAttribute('aria-current', String(slideIndex === index)));
+  galleryProgress.forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === index));
   galleryCaption.textContent = gallerySlides[index].dataset.caption;
   if (announce) galleryStatus.textContent = `Poster ${index + 1} dari ${gallerySlides.length}: ${gallerySlides[index].querySelector('img').alt}`;
 }
@@ -53,22 +53,20 @@ function updateGallery(index, announce = false) {
 function goToGallerySlide(index) {
   const nextIndex = (index + gallerySlides.length) % gallerySlides.length;
   const slide = gallerySlides[nextIndex];
-  const left = slide.offsetLeft - gallerySlides[0].offsetLeft;
-  galleryScrollLocked = true;
-  clearTimeout(galleryScrollTimer);
+  const left = slide.offsetLeft - (galleryTrack.clientWidth - slide.clientWidth) / 2;
   galleryTrack.scrollTo({ left, behavior: 'smooth' });
   updateGallery(nextIndex, true);
-  galleryScrollTimer = setTimeout(() => { galleryScrollLocked = false; }, 650);
 }
 
 galleryTrack.addEventListener('scroll', () => {
   cancelAnimationFrame(galleryScrollFrame);
   galleryScrollFrame = requestAnimationFrame(() => {
-    if (galleryScrollLocked) return;
-    const maxScroll = galleryTrack.scrollWidth - galleryTrack.clientWidth;
-    const closestIndex = maxScroll > 0
-      ? Math.round((galleryTrack.scrollLeft / maxScroll) * (gallerySlides.length - 1))
-      : 0;
+    const trackCenter = galleryTrack.scrollLeft + galleryTrack.clientWidth / 2;
+    const closestIndex = gallerySlides.reduce((closest, slide, index) => {
+      const center = slide.offsetLeft + slide.clientWidth / 2;
+      const closestCenter = gallerySlides[closest].offsetLeft + gallerySlides[closest].clientWidth / 2;
+      return Math.abs(center - trackCenter) < Math.abs(closestCenter - trackCenter) ? index : closest;
+    }, 0);
     if (closestIndex !== galleryIndex) updateGallery(closestIndex);
   });
 }, { passive: true });
