@@ -5,6 +5,7 @@
   --smoke: #666;
   --serif: 'DM Serif Display', Georgia, serif;
   --mono: 'IBM Plex Mono', monospace;
+  --sans: 'DM Sans', Arial, sans-serif;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 32px; }
