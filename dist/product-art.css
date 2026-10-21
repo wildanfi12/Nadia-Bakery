@@ -10,22 +10,24 @@
 [data-render=pia] .render-loop{animation-duration:9s;animation-delay:-3s}
 .real-product,.product-art .real-product{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;position:static;transform:none;max-width:100%}
 .render-hint{position:absolute;left:0;right:0;bottom:0;font:10px/1.4 var(--sans);letter-spacing:.035em;color:var(--corten);opacity:.7;pointer-events:none}
-.product-art-3d{display:block;width:100%;background:transparent;border:1px solid #b84b3035;border-radius:14px;aspect-ratio:1.15;cursor:pointer;padding:14px 18px 30px;overflow:visible}
-.product-art-3d:hover,.product-art-3d:focus-visible{border-color:var(--corten)}
+.product-art-3d{display:block;width:100%;background:transparent;border:0;border-radius:14px;aspect-ratio:1.15;cursor:pointer;padding:22px 26px 34px;overflow:visible}
+.product-art-3d:focus-visible{outline:2px solid var(--corten);outline-offset:4px}
 .product-art-3d .render-hint{bottom:15px}
-.hero-art-3d{width:420px;height:335px;cursor:pointer}
+.hero-art-3d{width:100%;height:100%;cursor:pointer;padding:24px 38px 34px}
 .hero-art-3d .real-product{object-fit:contain}
 .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 32px}
 .product-art-3d{max-height:440px}.motion-product h3{margin-top:18px}
 .render-note{font:12px/1.7 var(--sans);text-align:center;max-width:680px;margin:38px auto 0;color:var(--smoke)}
 .inspect-product .render-action{animation:food-inspect 1.7s cubic-bezier(.25,.65,.3,1) both}
+.hero-art-3d.inspect-product .render-action{animation-name:hero-food-inspect}
 [data-render=kering].inspect-product .render-action{animation-name:rusk-inspect}
 [data-render=pia].inspect-product .render-action{animation-name:pia-inspect}
 [data-render=brownies].inspect-product .render-action{animation-name:brownie-inspect}
 @keyframes food-float{0%,100%{transform:translateY(3px) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
 @keyframes food-inspect{0%,100%{transform:scale(1) rotate(0)}35%,60%{transform:scale(1.13) translateY(-7px) rotate(-3deg)}}
+@keyframes hero-food-inspect{0%,100%{transform:scale(1) rotate(0)}35%,60%{transform:scale(1.055) translateY(-5px) rotate(-1.5deg)}}
 @keyframes rusk-inspect{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.11) rotate(6deg)}65%{transform:scale(1.11) rotate(-5deg)}}
 @keyframes pia-inspect{0%,100%{transform:scale(1) rotateY(0)}35%,60%{transform:scale(1.14) rotateY(-10deg) translateY(-5px)}}
 @keyframes brownie-inspect{0%,100%{transform:scale(1) rotate(0)}35%,60%{transform:scale(1.16) rotate(3deg) translateY(-8px)}}
-@media(max-width:620px){.products{grid-template-columns:1fr}.motion-art{min-height:145px}.motion-product h3{margin-top:14px}.render-hint{font-size:9px}.product-art-3d{max-height:370px;padding:12px 12px 30px}}
+@media(max-width:620px){.products{grid-template-columns:1fr}.motion-art{min-height:145px}.motion-product h3{margin-top:14px}.render-hint{font-size:9px}.product-art-3d{max-height:370px;padding:18px 18px 32px}.hero-art-3d{padding:30px 46px 40px}}
 @media(prefers-reduced-motion:reduce){.render-loop,.render-action{animation:none!important}.render-tilt{transform:none!important}.inspect-product .real-product{filter:brightness(1.06)}}
